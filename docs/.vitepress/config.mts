@@ -10,8 +10,9 @@ export default defineConfig({
   lastUpdated: true,
 
   head: [
-    ['meta', { name: 'theme-color', content: '#f6f7f5' }],
-    ['meta', { name: 'author', content: 'GU' }]
+    ['meta', { name: 'theme-color', content: '#ffffff' }],
+    ['meta', { name: 'author', content: 'GU' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/ml-research-plotting-tutorial/logo.svg' }]
   ],
 
   markdown: {
@@ -20,6 +21,7 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: 'ML Figure Lab',
+    logo: '/logo.svg',
     nav: [
       { text: '基础', link: '/guide/foundations.html' },
       { text: '图型', link: '/plots/learning-curves.html' },
@@ -50,33 +52,33 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: '开始',
+        text: '第一部分 · 视觉基础',
         items: [
-          { text: '前言', link: '/preface.html' },
-          { text: '绘图原则', link: '/guide/foundations.html' },
-          { text: '环境与样式', link: '/guide/environment.html' }
+          { text: '00 前言', link: '/preface.html' },
+          { text: '01 绘图原则', link: '/guide/foundations.html' },
+          { text: '02 环境与样式', link: '/guide/environment.html' }
         ]
       },
       {
-        text: '核心图型',
+        text: '第二部分 · 核心图型',
         items: [
-          { text: '学习曲线', link: '/plots/learning-curves.html' },
-          { text: '分类器评估', link: '/plots/classification.html' },
-          { text: '分布与比较', link: '/plots/distributions.html' }
+          { text: '03 学习曲线', link: '/plots/learning-curves.html' },
+          { text: '04 分类器评估', link: '/plots/classification.html' },
+          { text: '05 分布与比较', link: '/plots/distributions.html' }
         ]
       },
       {
-        text: '实验设计',
+        text: '第三部分 · 实验设计',
         items: [
-          { text: '消融实验', link: '/experiments/ablation.html' },
-          { text: '多随机种子', link: '/experiments/repeated-runs.html' }
+          { text: '06 消融实验', link: '/experiments/ablation.html' },
+          { text: '07 多随机种子', link: '/experiments/repeated-runs.html' }
         ]
       },
       {
-        text: '论文交付',
+        text: '第四部分 · 论文交付',
         items: [
-          { text: '尺寸与导出', link: '/publication/export.html' },
-          { text: '投稿检查表', link: '/reference/checklist.html' }
+          { text: '08 尺寸与导出', link: '/publication/export.html' },
+          { text: '09 投稿检查表', link: '/reference/checklist.html' }
         ]
       }
     ],
