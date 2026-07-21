@@ -10,13 +10,14 @@ export default defineConfig({
   lastUpdated: true,
 
   head: [
-    ['meta', { name: 'theme-color', content: '#ffffff' }],
+    ['meta', { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#f2f4f8' }],
+    ['meta', { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#0d131d' }],
     ['meta', { name: 'author', content: 'GU' }],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/ml-research-plotting-tutorial/logo.svg' }]
   ],
 
   markdown: {
-    lineNumbers: true
+    lineNumbers: false
   },
 
   themeConfig: {
