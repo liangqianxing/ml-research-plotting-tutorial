@@ -9,7 +9,7 @@ layout: home
       <h1>机器学习<br />科研绘图教程</h1>
       <p class="lab-home__title">A PRACTICAL GUIDE TO RESEARCH FIGURES</p>
       <div class="lab-home__intro">
-        <p>从实验记录到论文图表：用清晰、可复现的视觉编码呈现模型差异与不确定性，让每一张图都经得起审稿人推敲。</p>
+        <p>从实验记录到论文图表与方法总览：用清晰的视觉编码呈现证据，用稳定的图形语言讲明方法，让每一张图都经得起审稿人推敲。</p>
       </div>
       <div class="lab-home__actions">
         <a class="lab-home__primary" href="./preface.html">开始阅读</a>
@@ -47,9 +47,9 @@ layout: home
       <figcaption>训练集持续上升，验证集在第 80 轮后回落——泛化差距开始扩大。<b>FIG 01</b></figcaption>
     </figure>
     <dl class="lab-home__meta">
-      <div><dt>CHAPTERS</dt><dd>10</dd></div>
-      <div><dt>WORKFLOWS</dt><dd>04</dd></div>
-      <div><dt>STACK</dt><dd>Python</dd></div>
+      <div><dt>CHAPTERS</dt><dd>15</dd></div>
+      <div><dt>WORKFLOWS</dt><dd>05</dd></div>
+      <div><dt>STACK</dt><dd>Python / PPT</dd></div>
       <div><dt>OUTPUT</dt><dd>PDF / SVG</dd></div>
     </dl>
   </section>
@@ -92,6 +92,11 @@ layout: home
         <span>04</span>
         <div><h3>完成论文交付</h3><p>栏宽、字号、格式与最终检查。</p></div>
         <b>PUBLICATION</b>
+      </a>
+      <a href="./diagrams/ppt-workflow.html">
+        <span>05</span>
+        <div><h3>设计论文示意图</h3><p>用 PPT 完成配色、形状、总览图与视觉精修。</p></div>
+        <b>DIAGRAMS</b>
       </a>
     </div>
   </section>

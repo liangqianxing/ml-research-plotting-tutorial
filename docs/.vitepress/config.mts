@@ -27,6 +27,7 @@ export default defineConfig({
       { text: '基础', link: '/guide/foundations.html' },
       { text: '图型', link: '/plots/learning-curves.html' },
       { text: '实验', link: '/experiments/ablation.html' },
+      { text: '示意图', link: '/diagrams/ppt-workflow.html' },
       { text: '投稿', link: '/publication/export.html' }
     ],
 
@@ -80,6 +81,16 @@ export default defineConfig({
         items: [
           { text: '08 尺寸与导出', link: '/publication/export.html' },
           { text: '09 投稿检查表', link: '/reference/checklist.html' }
+        ]
+      },
+      {
+        text: '第五部分 · 论文示意图',
+        items: [
+          { text: '10 PPT 绘图工作流', link: '/diagrams/ppt-workflow.html' },
+          { text: '11 科研配色', link: '/diagrams/color.html' },
+          { text: '12 形状与连线', link: '/diagrams/shapes.html' },
+          { text: '13 论文总览图', link: '/diagrams/overview.html' },
+          { text: '14 视觉层级与精修', link: '/diagrams/polish.html' }
         ]
       }
     ],

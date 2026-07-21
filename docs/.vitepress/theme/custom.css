@@ -459,6 +459,45 @@ body {
   box-shadow: var(--lab-shadow-sm);
 }
 
+/* 论文原图说明：来源、图号与图注作为一个连续阅读单元 */
+.vp-doc .paper-caption {
+  margin: -14px 0 34px;
+  padding: 12px 15px 13px;
+  border-left: 3px solid var(--vp-c-brand-1);
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg-soft);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.vp-doc .paper-caption strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--vp-c-text-1);
+  font-size: 13px;
+}
+
+.vp-doc .paper-caption p {
+  margin: 4px 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.vp-doc .paper-caption .paper-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 8px;
+}
+
+.vp-doc .paper-caption .paper-links a {
+  font-weight: 650;
+}
+
+.dark .vp-doc img[src*='/paper-figures/'] {
+  background: #ffffff;
+}
+
 .VPDocFooter .edit-info {
   border-top-color: var(--vp-c-divider);
 }
@@ -943,6 +982,19 @@ body {
   .vp-doc h2 {
     margin-top: 44px;
     font-size: 21px;
+  }
+
+  .vp-doc table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .vp-doc .paper-caption {
+    margin-top: -16px;
+    padding: 11px 13px 12px;
   }
 }
 
