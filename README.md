@@ -1,32 +1,35 @@
-# 机器学习科研绘图教程
+# ML Figure Lab
 
-面向机器学习研究者的中文科研绘图教程。项目使用原生 HTML、CSS 和 JavaScript，可直接部署到 GitHub Pages，不需要构建工具。
+面向机器学习研究者的中文科研绘图教程。站点使用 VitePress 构建，内容以 Markdown 维护，并通过 GitHub Actions 自动部署到 GitHub Pages。
 
-## 内容
+## 在线阅读
 
-- 科研绘图的视觉编码与可复现原则
-- 学习曲线、ROC、概率校准、混淆矩阵和特征重要性示例
-- Matplotlib、Seaborn 和 scikit-learn 最小代码配方
-- 论文投稿前的图片导出检查清单
+<https://liangqianxing.github.io/ml-research-plotting-tutorial/>
 
-## 本地预览
-
-直接打开 `index.html`，或在项目目录运行：
+## 本地开发
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run docs:dev
 ```
 
-然后访问 `http://localhost:8000`。
+生产构建：
 
-## 项目结构
+```bash
+npm run docs:build
+npm run docs:preview
+```
+
+## 内容结构
 
 ```text
-.
-├── index.html
-├── styles.css
-├── script.js
-└── README.md
+docs/
+├── .vitepress/       # 站点配置、主题和交互组件
+├── guide/            # 基础原则与绘图环境
+├── plots/            # 常见机器学习图型
+├── experiments/      # 消融实验与重复实验
+├── publication/      # 论文尺寸和导出
+└── reference/        # 投稿检查表
 ```
 
 ## 许可

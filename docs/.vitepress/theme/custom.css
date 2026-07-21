@@ -1,0 +1,383 @@
+:root {
+  --vp-font-family-base: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --vp-font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --vp-c-bg: #f6f7f5;
+  --vp-c-bg-alt: #eef1ee;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #f0f3f0;
+  --vp-c-text-1: #202321;
+  --vp-c-text-2: #657069;
+  --vp-c-text-3: #89918c;
+  --vp-c-border: #d8ddd9;
+  --vp-c-divider: #d8ddd9;
+  --vp-c-gutter: #d8ddd9;
+  --vp-c-brand-1: #147d73;
+  --vp-c-brand-2: #0d6b63;
+  --vp-c-brand-3: #0a5852;
+  --vp-c-brand-soft: rgba(20, 125, 115, 0.12);
+  --vp-button-brand-bg: #147d73;
+  --vp-button-brand-hover-bg: #0d6b63;
+  --vp-button-brand-active-bg: #0a5852;
+  --vp-button-brand-text: #ffffff;
+  --vp-button-alt-bg: #e5e9e5;
+  --vp-button-alt-hover-bg: #d9dfda;
+  --vp-button-alt-text: #202321;
+  --vp-home-hero-name-color: #147d73;
+  --vp-home-hero-name-background: none;
+  --vp-layout-max-width: 1480px;
+  --vp-sidebar-width: 286px;
+  --lab-red: #df4b36;
+  --lab-teal: #147d73;
+  --lab-gold: #b47b17;
+  --lab-shadow: 0 14px 36px rgba(27, 38, 31, 0.06);
+}
+
+.dark {
+  --vp-c-bg: #161917;
+  --vp-c-bg-alt: #101311;
+  --vp-c-bg-elv: #1d211e;
+  --vp-c-bg-soft: #242925;
+  --vp-c-text-1: #f0f3f0;
+  --vp-c-text-2: #adb6b0;
+  --vp-c-text-3: #879089;
+  --vp-c-border: #3b433e;
+  --vp-c-divider: #333a35;
+  --vp-c-gutter: #333a35;
+  --vp-c-brand-1: #70c7bc;
+  --vp-c-brand-2: #8bd7ce;
+  --vp-c-brand-3: #a5e2da;
+  --vp-c-brand-soft: rgba(112, 199, 188, 0.14);
+  --vp-button-brand-bg: #397f77;
+  --vp-button-brand-hover-bg: #448f86;
+  --vp-button-alt-bg: #2a302c;
+  --vp-button-alt-hover-bg: #343b36;
+  --vp-button-alt-text: #f0f3f0;
+  --vp-home-hero-name-color: #70c7bc;
+  --lab-red: #f17865;
+  --lab-teal: #70c7bc;
+  --lab-gold: #ddb45a;
+  --lab-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+*,
+*::before,
+*::after {
+  letter-spacing: 0 !important;
+}
+
+.VPNavBar {
+  border-bottom-color: var(--vp-c-divider) !important;
+  background: color-mix(in srgb, var(--vp-c-bg) 94%, transparent) !important;
+  backdrop-filter: blur(14px);
+}
+
+.VPNavBarTitle .title {
+  font-weight: 760;
+}
+
+.VPHome {
+  padding-bottom: 0 !important;
+}
+
+.VPHero {
+  padding-top: 66px !important;
+  padding-bottom: 28px !important;
+}
+
+.VPHero .container {
+  max-width: 1180px !important;
+}
+
+.VPHero .main {
+  max-width: 900px !important;
+}
+
+.VPHero .name {
+  max-width: none !important;
+  font-size: 54px !important;
+  line-height: 1.08 !important;
+}
+
+.VPHero .text {
+  max-width: 900px !important;
+  color: var(--vp-c-text-1) !important;
+  font-family: Georgia, "Songti SC", "STSong", serif;
+  font-size: 42px !important;
+  line-height: 1.18 !important;
+}
+
+.VPHero .tagline {
+  max-width: 720px !important;
+  color: var(--vp-c-text-2) !important;
+  font-size: 17px !important;
+  line-height: 1.7 !important;
+}
+
+.VPHero .actions {
+  padding-top: 22px !important;
+}
+
+.VPHero .VPButton {
+  border-radius: 5px !important;
+}
+
+.VPHomeFeatures {
+  padding-top: 10px !important;
+  padding-bottom: 34px !important;
+}
+
+.VPHomeFeatures .container {
+  max-width: 1180px !important;
+}
+
+.VPFeature {
+  border: 1px solid var(--vp-c-border) !important;
+  border-radius: 6px !important;
+  background: var(--vp-c-bg-elv) !important;
+  box-shadow: none !important;
+}
+
+.VPFeature .title {
+  font-size: 15px !important;
+}
+
+.VPFeature .details {
+  color: var(--vp-c-text-2) !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+
+.home-lab {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 46px 24px 82px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.home-lab__heading {
+  display: grid;
+  grid-template-columns: 150px minmax(260px, 1fr) minmax(260px, 0.8fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.home-lab__heading .section-index {
+  margin: 5px 0 0;
+  color: var(--lab-red);
+  font: 700 10px/1.4 var(--vp-font-family-mono);
+}
+
+.home-lab__heading h2 {
+  margin: 0;
+  border: 0;
+  font-family: Georgia, "Songti SC", "STSong", serif;
+  font-size: 30px;
+  line-height: 1.3;
+}
+
+.home-lab__heading p:last-child {
+  margin: 2px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.learning-path {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px 24px 86px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.learning-path a {
+  min-width: 0;
+  padding: 22px 24px 20px 0;
+  border-right: 1px solid var(--vp-c-divider);
+  color: inherit;
+  text-decoration: none;
+}
+
+.learning-path a + a {
+  padding-left: 24px;
+}
+
+.learning-path a:last-child {
+  border-right: 0;
+}
+
+.learning-path span {
+  display: block;
+  margin-bottom: 32px;
+  color: var(--lab-red);
+  font: 700 11px/1 var(--vp-font-family-mono);
+}
+
+.learning-path h3 {
+  margin: 0 0 9px;
+  font-size: 16px;
+}
+
+.learning-path p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.VPSidebar {
+  border-right: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-alt) !important;
+}
+
+.VPSidebarItem .text {
+  font-size: 13px !important;
+}
+
+.VPSidebarItem.is-active > .item .link > .text {
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 700 !important;
+}
+
+.VPDoc .content-container {
+  max-width: 780px !important;
+}
+
+.vp-doc h1 {
+  font-family: Georgia, "Songti SC", "STSong", serif;
+  font-size: 38px;
+  line-height: 1.25;
+}
+
+.vp-doc h2 {
+  margin-top: 48px;
+  border-top-color: var(--vp-c-divider);
+  font-size: 25px;
+}
+
+.vp-doc h3 {
+  margin-top: 32px;
+  font-size: 18px;
+}
+
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.85;
+}
+
+.vp-doc a {
+  text-underline-offset: 3px;
+}
+
+.vp-doc div[class*='language-'],
+.vp-doc .custom-block {
+  border-radius: 6px;
+}
+
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
+}
+
+.vp-doc img {
+  max-height: 640px;
+  margin: 24px auto;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+}
+
+.VPDocFooter .pager-link {
+  border-radius: 6px;
+}
+
+@media (max-width: 900px) {
+  .VPHero .name {
+    font-size: 46px !important;
+  }
+
+  .VPHero .text {
+    font-size: 36px !important;
+  }
+
+  .home-lab__heading {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+
+  .home-lab__heading p:last-child {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .VPHome {
+    padding-top: 64px !important;
+  }
+
+  .VPHero {
+    padding-top: 48px !important;
+  }
+
+  .VPHero .name {
+    font-size: 38px !important;
+  }
+
+  .VPHero .text {
+    font-size: 30px !important;
+  }
+
+  .VPHero .tagline {
+    font-size: 15px !important;
+  }
+
+  .home-lab {
+    padding: 38px 18px 64px;
+  }
+
+  .home-lab__heading {
+    display: block;
+  }
+
+  .home-lab__heading h2 {
+    margin: 10px 0 12px;
+    font-size: 26px;
+  }
+
+  .learning-path {
+    grid-template-columns: 1fr;
+    padding: 42px 18px 62px;
+  }
+
+  .learning-path a,
+  .learning-path a + a {
+    padding: 18px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--vp-c-divider);
+  }
+
+  .learning-path a:last-child {
+    border-bottom: 0;
+  }
+
+  .learning-path span {
+    margin-bottom: 12px;
+  }
+
+  .vp-doc h1 {
+    font-size: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
