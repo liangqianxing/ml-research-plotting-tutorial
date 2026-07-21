@@ -35,12 +35,12 @@ const datasets: Record<Metric, Series> = {
   }
 }
 
-const palette = {
-  ink: '#202321',
-  muted: '#67706a',
-  grid: '#dfe3df',
-  red: '#df4b36',
-  teal: '#147d73'
+const fallbackPalette = {
+  ink: '#182033',
+  muted: '#68758a',
+  grid: '#dce3ed',
+  red: '#df5c4b',
+  teal: '#159c8c'
 }
 
 const canvas = ref<HTMLCanvasElement | null>(null)
@@ -48,6 +48,7 @@ const metric = ref<Metric>('accuracy')
 const showBand = ref(true)
 const showGrid = ref(true)
 let observer: ResizeObserver | undefined
+let themeObserver: MutationObserver | undefined
 
 const series = computed(() => datasets[metric.value])
 const bestIndex = computed(() => {
@@ -99,6 +100,15 @@ function draw() {
   if (!context) return
   context.setTransform(ratio, 0, 0, ratio, 0, 0)
   context.clearRect(0, 0, width, height)
+
+  const styles = getComputedStyle(element)
+  const palette = {
+    ink: styles.getPropertyValue('--vp-c-text-1').trim() || fallbackPalette.ink,
+    muted: styles.getPropertyValue('--vp-c-text-2').trim() || fallbackPalette.muted,
+    grid: styles.getPropertyValue('--vp-c-divider').trim() || fallbackPalette.grid,
+    red: styles.getPropertyValue('--lab-red').trim() || fallbackPalette.red,
+    teal: styles.getPropertyValue('--lab-teal').trim() || fallbackPalette.teal
+  }
 
   const current = series.value
   const plot = {
@@ -181,9 +191,14 @@ onMounted(() => {
     observer = new ResizeObserver(draw)
     observer.observe(canvas.value)
   }
+  themeObserver = new MutationObserver(draw)
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
 })
 
-onBeforeUnmount(() => observer?.disconnect())
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  themeObserver?.disconnect()
+})
 </script>
 
 <template>
@@ -337,7 +352,7 @@ onBeforeUnmount(() => observer?.disconnect())
 
 .metric-tabs button[aria-pressed='true'] {
   color: #fff;
-  background: var(--vp-c-text-1);
+  background: var(--vp-button-brand-bg);
 }
 
 .metric-tabs button:focus-visible,
