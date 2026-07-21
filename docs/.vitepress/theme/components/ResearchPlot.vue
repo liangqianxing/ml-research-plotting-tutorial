@@ -36,11 +36,12 @@ const datasets: Record<Metric, Series> = {
 }
 
 const fallbackPalette = {
-  ink: '#182033',
-  muted: '#68758a',
-  grid: '#dce3ed',
-  red: '#df5c4b',
-  teal: '#159c8c'
+  ink: '#182230',
+  muted: '#49586c',
+  grid: '#dee5ee',
+  blue: '#2b5ce6',
+  slate: '#5c6b80',
+  band: 'rgba(43, 92, 230, 0.10)'
 }
 
 const canvas = ref<HTMLCanvasElement | null>(null)
@@ -69,11 +70,12 @@ function drawLine(
   context: CanvasRenderingContext2D,
   points: Array<{ x: number; y: number }>,
   color: string,
+  width: number,
   dashed = false
 ) {
   context.save()
   context.strokeStyle = color
-  context.lineWidth = 2.25
+  context.lineWidth = width
   context.lineJoin = 'round'
   context.lineCap = 'round'
   context.setLineDash(dashed ? [7, 5] : [])
@@ -106,23 +108,24 @@ function draw() {
     ink: styles.getPropertyValue('--vp-c-text-1').trim() || fallbackPalette.ink,
     muted: styles.getPropertyValue('--vp-c-text-2').trim() || fallbackPalette.muted,
     grid: styles.getPropertyValue('--vp-c-divider').trim() || fallbackPalette.grid,
-    red: styles.getPropertyValue('--lab-red').trim() || fallbackPalette.red,
-    teal: styles.getPropertyValue('--lab-teal').trim() || fallbackPalette.teal
+    blue: styles.getPropertyValue('--lab-blue').trim() || fallbackPalette.blue,
+    slate: styles.getPropertyValue('--lab-slate').trim() || fallbackPalette.slate,
+    band: styles.getPropertyValue('--lab-band').trim() || fallbackPalette.band
   }
 
   const current = series.value
   const plot = {
-    left: width < 560 ? 52 : 66,
-    right: width - 22,
-    top: 28,
-    bottom: height - 52
+    left: width < 560 ? 54 : 68,
+    right: width - 24,
+    top: 30,
+    bottom: height - 54
   }
   const plotWidth = plot.right - plot.left
   const plotHeight = plot.bottom - plot.top
   const xScale = (index: number) => plot.left + (index / (current.train.length - 1)) * plotWidth
   const yScale = (value: number) => plot.bottom - ((value - current.min) / (1 - current.min)) * plotHeight
 
-  context.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace'
+  context.font = '10.5px ui-monospace, SFMono-Regular, Menlo, monospace'
   context.fillStyle = palette.muted
   context.lineWidth = 1
   const yValues = metric.value === 'f1' ? [0.5, 0.6, 0.7, 0.8, 0.9, 1] : [0.65, 0.7, 0.8, 0.9, 1]
@@ -138,13 +141,13 @@ function draw() {
     }
     context.textAlign = 'right'
     context.textBaseline = 'middle'
-    context.fillText(value.toFixed(2), plot.left - 9, y)
+    context.fillText(value.toFixed(2), plot.left - 10, y)
   })
 
   ;[0, 2, 4, 6, 8, 9].forEach((index) => {
     context.textAlign = 'center'
     context.textBaseline = 'top'
-    context.fillText(String((index + 1) * 10), xScale(index), plot.bottom + 9)
+    context.fillText(String((index + 1) * 10), xScale(index), plot.bottom + 10)
   })
 
   context.strokeStyle = palette.ink
@@ -155,7 +158,7 @@ function draw() {
   context.stroke()
 
   if (showBand.value) {
-    context.fillStyle = 'rgba(223, 75, 54, 0.14)'
+    context.fillStyle = palette.band
     context.beginPath()
     current.valid.forEach((value, index) => {
       const x = xScale(index)
@@ -172,21 +175,32 @@ function draw() {
 
   const trainPoints = current.train.map((value, index) => ({ x: xScale(index), y: yScale(value) }))
   const validPoints = current.valid.map((value, index) => ({ x: xScale(index), y: yScale(value) }))
-  drawLine(context, trainPoints, palette.teal, true)
-  drawLine(context, validPoints, palette.red)
+  drawLine(context, trainPoints, palette.slate, 2, true)
+  drawLine(context, validPoints, palette.blue, 2.5)
 
-  context.font = '700 10px ui-monospace, SFMono-Regular, Menlo, monospace'
+  // 标注最佳验证点
+  const best = validPoints[bestIndex.value]
+  context.fillStyle = palette.blue
+  context.beginPath()
+  context.arc(best.x, best.y, 4, 0, Math.PI * 2)
+  context.fill()
+  context.strokeStyle = palette.ink === '#182230' ? '#ffffff' : '#151f2f'
+  context.lineWidth = 2
+  context.stroke()
+
+  context.font = '700 11px ui-monospace, SFMono-Regular, Menlo, monospace'
   context.textAlign = 'right'
-  context.fillStyle = palette.teal
-  context.fillText('TRAIN', plot.right - 2, trainPoints[trainPoints.length - 1].y - 10)
-  context.fillStyle = palette.red
-  context.fillText('VALID', plot.right - 2, validPoints[validPoints.length - 1].y + 17)
+  context.textBaseline = 'alphabetic'
+  context.fillStyle = palette.slate
+  context.fillText('TRAIN', plot.right - 2, trainPoints[trainPoints.length - 1].y - 12)
+  context.fillStyle = palette.blue
+  context.fillText('VALID', plot.right - 2, validPoints[validPoints.length - 1].y + 20)
 }
 
 watch([metric, showBand, showGrid], () => nextTick(draw))
 
 onMounted(() => {
-  draw()
+  requestAnimationFrame(draw)
   if (canvas.value) {
     observer = new ResizeObserver(draw)
     observer.observe(canvas.value)
@@ -212,6 +226,7 @@ onBeforeUnmount(() => {
       <div class="research-lab__legend" aria-label="曲线图例">
         <span><i class="legend-swatch train"></i>Train</span>
         <span><i class="legend-swatch valid"></i>Valid</span>
+        <span><i class="legend-swatch band"></i>±1 std</span>
       </div>
     </header>
 
@@ -254,9 +269,9 @@ onBeforeUnmount(() => {
 <style scoped>
 .research-lab {
   --lab-canvas-height: 360px;
-  margin: 28px auto 0;
+  margin: 32px auto 0;
   border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
+  border-radius: 14px;
   background: var(--vp-c-bg-elv);
   box-shadow: var(--lab-shadow);
   overflow: hidden;
@@ -272,56 +287,67 @@ onBeforeUnmount(() => {
 }
 
 .research-lab__header {
-  padding: 22px 24px;
+  padding: 24px 26px;
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
 .research-lab__kicker {
-  margin: 0 0 5px;
-  color: var(--lab-red);
-  font: 700 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  margin: 0 0 6px;
+  color: var(--vp-c-brand-1);
+  font: 700 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.1em;
 }
 
 .research-lab__header h2 {
   margin: 0;
   border: 0;
-  font-size: 20px;
+  font-size: 21px;
+  font-weight: 750;
   line-height: 1.35;
 }
 
 .research-lab__header p:last-child {
-  margin: 5px 0 0;
+  margin: 6px 0 0;
   color: var(--vp-c-text-2);
-  font-size: 13px;
+  font-size: 13.5px;
 }
 
 .research-lab__legend {
   display: flex;
-  gap: 14px;
+  flex: 0 0 auto;
+  gap: 16px;
   color: var(--vp-c-text-2);
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .research-lab__legend span {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
 
 .legend-swatch {
-  width: 16px;
-  height: 2px;
-  background: var(--lab-red);
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--lab-blue);
 }
 
 .legend-swatch.train {
   height: 0;
-  border-top: 2px dashed var(--lab-teal);
+  border-top: 2px dashed var(--lab-slate);
+  border-radius: 0;
   background: transparent;
 }
 
+.legend-swatch.band {
+  height: 10px;
+  border: 1px solid var(--lab-blue);
+  background: var(--lab-band);
+}
+
 .research-lab__toolbar {
-  padding: 12px 18px;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--vp-c-divider);
   background: var(--vp-c-bg-soft);
 }
@@ -329,25 +355,30 @@ onBeforeUnmount(() => {
 .metric-tabs {
   display: inline-flex;
   border: 1px solid var(--vp-c-border);
-  border-radius: 5px;
-  background: var(--vp-c-bg);
+  border-radius: 9px;
+  background: var(--vp-c-bg-elv);
   overflow: hidden;
 }
 
 .metric-tabs button {
-  min-height: 34px;
-  padding: 5px 13px;
+  min-height: 36px;
+  padding: 6px 16px;
   border: 0;
   border-right: 1px solid var(--vp-c-border);
   color: var(--vp-c-text-2);
   background: transparent;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 650;
+  transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .metric-tabs button:last-child {
   border-right: 0;
+}
+
+.metric-tabs button:hover {
+  color: var(--vp-c-text-1);
 }
 
 .metric-tabs button[aria-pressed='true'] {
@@ -363,25 +394,26 @@ onBeforeUnmount(() => {
 
 .plot-options {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   color: var(--vp-c-text-2);
-  font-size: 11px;
+  font-size: 12.5px;
 }
 
 .plot-options label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  cursor: pointer;
 }
 
 .plot-options input {
-  width: 14px;
-  height: 14px;
-  accent-color: var(--lab-teal);
+  width: 15px;
+  height: 15px;
+  accent-color: var(--vp-c-brand-1);
 }
 
 .research-lab__plot {
-  padding: 18px;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -401,7 +433,7 @@ onBeforeUnmount(() => {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 18px;
+  padding: 15px 20px;
   border-right: 1px solid var(--vp-c-divider);
 }
 
@@ -411,11 +443,12 @@ onBeforeUnmount(() => {
 
 .research-lab__summary span {
   color: var(--vp-c-text-2);
-  font-size: 11px;
+  font-size: 12.5px;
 }
 
 .research-lab__summary strong {
-  font: 700 16px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font: 700 17px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 640px) {
@@ -435,7 +468,7 @@ onBeforeUnmount(() => {
 
   .metric-tabs button {
     flex: 1;
-    padding-inline: 7px;
+    padding-inline: 8px;
   }
 
   .research-lab__plot {

@@ -9,22 +9,39 @@ const metadata = computed(() => ({
   classification: {
     index: 'FIGURE 04-A',
     title: '分类器诊断不是一个分数',
-    caption: 'ROC、PR 与校准曲线分别回答排序、稀有正类检索和概率可信度问题。'
+    caption: 'ROC、PR 与校准曲线分别回答排序、稀有正类检索和概率可信度问题。',
+    legend: [
+      { label: 'Proposed', cls: 'primary' },
+      { label: 'Baseline', cls: 'baseline' }
+    ]
   },
   distribution: {
     index: 'FIGURE 05-A',
     title: '保留每次实验的配对关系',
-    caption: '细线连接相同随机种子；粗点表示组均值。配对结构揭示提升是否稳定。'
+    caption: '细线连接相同随机种子；菱形表示组均值。配对结构揭示提升是否稳定。',
+    legend: [
+      { label: 'Proposed', cls: 'primary' },
+      { label: 'Baseline', cls: 'baseline' }
+    ]
   },
   ablation: {
     index: 'FIGURE 06-A',
     title: '以完整模型为零点比较组件贡献',
-    caption: '横轴表示相对完整模型的 Macro F1 变化，误差线来自配对重复实验。'
+    caption: '横轴表示相对完整模型的 Macro F1 变化，误差线来自配对重复实验。',
+    legend: [
+      { label: '性能下降', cls: 'negative' },
+      { label: '性能提升', cls: 'positive' }
+    ]
   },
   runs: {
     index: 'FIGURE 07-A',
     title: '均值之外仍要展示运行波动',
-    caption: '每个点是一条独立运行记录，菱形与误差线表示均值和标准差。'
+    caption: '每个点是一条独立运行记录，菱形与误差线表示均值和标准差。',
+    legend: [
+      { label: 'Baseline', cls: 'baseline' },
+      { label: 'Compact', cls: 'mid' },
+      { label: 'Proposed', cls: 'primary' }
+    ]
   }
 })[props.kind])
 </script>
@@ -37,8 +54,7 @@ const metadata = computed(() => ({
         <h2>{{ metadata.title }}</h2>
       </div>
       <div class="figure-plate__legend" aria-label="图例">
-        <span><i class="primary"></i>Proposed</span>
-        <span><i class="baseline"></i>Baseline</span>
+        <span v-for="item in metadata.legend" :key="item.label"><i :class="item.cls"></i>{{ item.label }}</span>
       </div>
     </header>
 
@@ -78,7 +94,7 @@ const metadata = computed(() => ({
         <text x="624" y="270" text-anchor="middle">Predicted probability</text>
       </g>
       <g class="metric-label">
-        <text x="72" y="55">AUC 0.94</text><text x="304" y="55">AP 0.81</text><text x="536" y="55">ECE 0.03</text>
+        <text x="72" y="58">AUC 0.94</text><text x="304" y="58">AP 0.81</text><text x="536" y="58">ECE 0.03</text>
       </g>
     </svg>
 
@@ -126,26 +142,26 @@ const metadata = computed(() => ({
       aria-label="四项组件消融相对完整模型的性能变化"
     >
       <g class="grid">
-        <path d="M300 38V244M400 38V244M500 38V244M600 38V244M700 38V244" />
+        <path d="M270 38V244M360 38V244M450 38V244M630 38V244" />
       </g>
-      <path class="zero-line" d="M600 30V250" />
+      <path class="zero-line" d="M540 30V250" />
       <g class="bar negative">
-        <rect x="354" y="49" width="246" height="24" rx="3"/>
-        <rect x="425" y="99" width="175" height="24" rx="3"/>
-        <rect x="492" y="149" width="108" height="24" rx="3"/>
+        <rect x="320" y="49" width="220" height="24" rx="4"/>
+        <rect x="383" y="99" width="157" height="24" rx="4"/>
+        <rect x="441" y="149" width="99" height="24" rx="4"/>
       </g>
-      <g class="bar positive"><rect x="600" y="199" width="58" height="24" rx="3"/></g>
+      <g class="bar positive"><rect x="540" y="199" width="54" height="24" rx="4"/></g>
       <g class="error-bars">
-        <path d="M340 61H368M340 55V67M368 55V67M412 111H438M412 105V117M438 105V117M480 161H504M480 155V167M504 155V167M646 211H670M646 205V217M670 205V217"/>
+        <path d="M298 61H342M298 55V67M342 55V67M365 111H401M365 105V117M401 105V117M423 161H459M423 155V167M459 155V167M576 211H612M576 205V217M612 205V217"/>
       </g>
-      <g class="chart-title">
-        <text x="72" y="66">- Encoder</text><text x="72" y="116">- Augmentation</text><text x="72" y="166">- Calibration</text><text x="72" y="216">+ Distillation</text>
+      <g class="chart-title" text-anchor="end">
+        <text x="252" y="66">- Encoder</text><text x="252" y="116">- Augmentation</text><text x="252" y="166">- Calibration</text><text x="252" y="216">+ Distillation</text>
       </g>
       <g class="axis-label" text-anchor="middle">
-        <text x="300" y="270">-0.06</text><text x="400" y="270">-0.04</text><text x="500" y="270">-0.02</text><text x="600" y="270">0</text><text x="700" y="270">+0.02</text>
+        <text x="270" y="270">-0.06</text><text x="360" y="270">-0.04</text><text x="450" y="270">-0.02</text><text x="540" y="270">0</text><text x="630" y="270">+0.02</text>
       </g>
       <g class="metric-label" text-anchor="end">
-        <text x="344" y="66">-0.049</text><text x="415" y="116">-0.035</text><text x="482" y="166">-0.022</text><text x="648" y="216">+0.012</text>
+        <text x="308" y="66">-0.049</text><text x="371" y="116">-0.035</text><text x="429" y="166">-0.022</text><text x="624" y="216" text-anchor="start">+0.012</text>
       </g>
     </svg>
 
@@ -162,7 +178,7 @@ const metadata = computed(() => ({
       <g class="run-dots baseline-dots">
         <circle cx="170" cy="192" r="5"/><circle cx="180" cy="174" r="5"/><circle cx="158" cy="184" r="5"/><circle cx="190" cy="165" r="5"/><circle cx="168" cy="155" r="5"/>
       </g>
-      <g class="run-dots amber-dots">
+      <g class="run-dots mid-dots">
         <circle cx="370" cy="148" r="5"/><circle cx="382" cy="130" r="5"/><circle cx="358" cy="139" r="5"/><circle cx="392" cy="119" r="5"/><circle cx="369" cy="107" r="5"/>
       </g>
       <g class="run-dots primary-dots">
@@ -180,7 +196,7 @@ const metadata = computed(() => ({
         <text x="45" y="202">0.82</text><text x="45" y="162">0.84</text><text x="45" y="122">0.86</text><text x="45" y="82">0.88</text>
       </g>
       <g class="metric-label" text-anchor="middle">
-        <text x="174" y="34">.833 +/- .009</text><text x="374" y="34">.857 +/- .010</text><text x="574" y="34">.874 +/- .010</text>
+        <text x="174" y="30">0.833 ± 0.009</text><text x="374" y="30">0.857 ± 0.010</text><text x="574" y="30">0.874 ± 0.010</text>
       </g>
     </svg>
 
@@ -190,9 +206,9 @@ const metadata = computed(() => ({
 
 <style scoped>
 .figure-plate {
-  margin: 30px 0 40px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 7px;
+  margin: 32px 0 40px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 14px;
   background: var(--vp-c-bg-elv);
   overflow: hidden;
   box-shadow: var(--lab-shadow);
@@ -203,51 +219,56 @@ const metadata = computed(() => ({
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  padding: 18px 20px 16px;
+  padding: 20px 22px 18px;
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
 .figure-plate__header p {
-  margin: 0 0 5px;
-  color: var(--lab-blue);
-  font: 700 10px/1.2 var(--vp-font-family-mono);
+  margin: 0 0 6px;
+  color: var(--vp-c-brand-1);
+  font: 700 11px/1.2 var(--vp-font-family-mono);
+  letter-spacing: 0.1em;
 }
 
 .figure-plate__header h2 {
   margin: 0;
   border: 0;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 700;
   line-height: 1.4;
 }
 
 .figure-plate__legend {
   display: flex;
   flex: 0 0 auto;
-  gap: 14px;
+  gap: 16px;
   color: var(--vp-c-text-2);
-  font-size: 10px;
+  font-size: 11.5px;
 }
 
 .figure-plate__legend span {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
 
 .figure-plate__legend i {
-  width: 13px;
+  width: 16px;
   height: 3px;
   border-radius: 2px;
 }
 
 .figure-plate__legend .primary { background: var(--lab-blue); }
-.figure-plate__legend .baseline { background: var(--lab-teal); }
+.figure-plate__legend .baseline { background: var(--lab-slate); }
+.figure-plate__legend .mid { background: var(--lab-mid); }
+.figure-plate__legend .negative { background: var(--lab-coral); }
+.figure-plate__legend .positive { background: var(--lab-teal); }
 
 .figure-plate__chart {
   display: block;
   width: 100%;
   height: auto;
-  padding: 18px 12px 8px;
+  padding: 20px 14px 10px;
   background: var(--vp-c-bg-elv);
 }
 
@@ -275,12 +296,12 @@ const metadata = computed(() => ({
 
 .curve path { stroke-width: 3; }
 .primary-line path { stroke: var(--lab-blue); }
-.baseline-line path { stroke: var(--lab-teal); stroke-dasharray: 7 5; }
+.baseline-line path { stroke: var(--lab-slate); stroke-dasharray: 7 5; }
 .dot-series circle,
 .primary-dots circle { fill: var(--lab-blue); }
-.baseline-dots circle { fill: var(--lab-teal); }
-.amber-dots circle { fill: var(--lab-amber); }
-.paired-lines path { stroke: var(--vp-c-text-3); stroke-width: 1.3; opacity: .65; }
+.baseline-dots circle { fill: var(--lab-slate); }
+.mid-dots circle { fill: var(--lab-mid); }
+.paired-lines path { stroke: var(--lab-slate); stroke-width: 1.3; opacity: 0.55; }
 .mean-markers path { fill: var(--vp-c-text-1); }
 .bar.negative rect { fill: var(--lab-coral); }
 .bar.positive rect { fill: var(--lab-teal); }
@@ -295,17 +316,17 @@ const metadata = computed(() => ({
   font-family: var(--vp-font-family-base);
 }
 
-.chart-title { fill: var(--vp-c-text-1); font-size: 12px; font-weight: 700; }
-.axis-label { font-size: 10px; }
-.metric-label { fill: var(--lab-blue); font-family: var(--vp-font-family-mono); font-size: 10px; font-weight: 700; }
+.chart-title { fill: var(--vp-c-text-1); font-size: 13px; font-weight: 700; }
+.axis-label { font-size: 12px; }
+.metric-label { fill: var(--lab-blue); font-family: var(--vp-font-family-mono); font-size: 11.5px; font-weight: 700; }
 
 figcaption {
-  padding: 12px 20px 14px;
+  padding: 14px 22px 16px;
   border-top: 1px solid var(--vp-c-divider);
   color: var(--vp-c-text-2);
   background: var(--vp-c-bg-soft);
-  font-size: 12px;
-  line-height: 1.65;
+  font-size: 12.5px;
+  line-height: 1.7;
 }
 
 @media (max-width: 640px) {
